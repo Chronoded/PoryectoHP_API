@@ -10,3 +10,10 @@ class Evento {}
 
 class Creado extends Evento {}
 
+class BlocVerificacion extends Bloc<Evento, Estado> {
+  BlocVerificacion() : super(Creandose()) {
+    on<Creado>((event, emit) {
+      emit(PantallaInicial());
+    });
+  }
+}
