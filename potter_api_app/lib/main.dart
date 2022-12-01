@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:potter_api_app/caracteristicas/verificaciones/bloc.dart';
 import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_creandose.dart';
+import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_primerapantalla.dart';
 
 void main() {
   runApp(const AplicacionInyectada());
@@ -14,7 +15,13 @@ class AplicacionInyectada extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BlocVerificacion(),
+      create: (context) {
+        BlocVerificacion blocVerificacion = BlocVerificacion();
+        Future.delayed(const Duration(seconds: 2), () {
+          blocVerificacion.add(Creado());
+        });
+        return blocVerificacion;
+      },
       child: const Aplicacion(),
     );
   }
@@ -32,6 +39,9 @@ class AplicacionInyectada extends StatelessWidget {
           var estado = context.watch<BlocVerificacion>().state;
           if (estado is Creandose) {
             return const VistaEnCreacion();
+          }
+          if (estado is PantallaInicial) {
+            return const VistaPrimeraPantalla();
           }
           return const Center(child: Text('ERROR'));
         }),

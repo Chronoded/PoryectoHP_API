@@ -7,8 +7,8 @@ class VistaEnCreacion extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: SizedBox(
-        width: 200,
-        height: 200,
+        width: 60,
+        height: 60,
         child: CircularProgressIndicator.adaptive(),
       ),
     );
