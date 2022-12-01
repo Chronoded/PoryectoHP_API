@@ -6,10 +6,28 @@ import 'package:potter_api_app/caracteristicas/dominio/personajes.dart';
 import '../dominio/problema.dart';
 import 'package:http/http.dart' as http;
 
+String nombrejson = '';
+List<dynamic>? nombresAlt;
+String? especie;
+String? escuela;
+String? fechaNac;
+int? anioNac;
+bool? mago;
+String? ancestro;
+String? colorOjos;
+String? colorCabello;
+Map? varita;
+String? patronus;
+bool? estudianteHowarts;
+bool? varitaHowarts;
+String? actor;
+List<dynamic>? actoresAlt;
+bool? vive;
+String? imagen;
+
 abstract class RepositorioPersonaje {
   Future<Either<Problema, Personaje>> obtenerPersonaje(NombrePersonaje nombre);
 }
-
 class RepositorioPersonajesReales extends RepositorioPersonaje {
   @override
   Future<Either<Problema, Personaje>> obtenerPersonaje(
@@ -22,24 +40,7 @@ class RepositorioPersonajesReales extends RepositorioPersonaje {
       return left(ErrordeJson());
     }
     List<dynamic> json = jsonDecode(respuesta.body);
-    String nombrejson;
-    List<dynamic> nombresAlt;
-    String especie;
-    String escuela;
-    String fechaNac;
-    int anioNac;
-    bool mago;
-    String ancestro;
-    String colorOjos;
-    String colorCabello;
-    Map varita;
-    String patronus;
-    bool estudianteHowarts;
-    bool varitaHowarts;
-    String actor;
-    List<dynamic> actoresAlt;
-    bool vive;
-    String imagen;
+
     for (var i = 0; i < json.length; i++) {
       try {
         if (json[i]["name"] == nombre.nombre) {
@@ -89,37 +90,18 @@ class RepositorioPersonajesReales extends RepositorioPersonaje {
     return Left(PersonajeNoEncontrado());
   }
 }
-
-
 class RepositorioObtenerPersonaje extends RepositorioPersonaje {
   @override
-  Future<Either<Problema, Personaje>> obtenerPersonaje(NombrePersonaje nombre) async {
+  Future<Either<Problema, Personaje>> obtenerPersonaje(
+      NombrePersonaje nombre) async {
     Personaje p;
     String jsonPersonaje = './lib/caracteristicas/data/datos_personaje.json';
     List<dynamic> json;
     try {
-      json = lecturaJson((File(jsonPersonaje).readAsStringSync()));
+      json = leeJson(jsonPersonaje);
     } catch (e) {
       return Left(JsonNoEncontrado());
     }
-    String nombrejson;
-    List<dynamic> nombresAlt;
-    String especie;
-    String escuela;
-    String fechaNac;
-    int anioNac;
-    bool mago;
-    String ancestro;
-    String colorOjos;
-    String colorCabello;
-    Map varita;
-    String patronus;
-    bool estudianteHowarts;
-    bool varitaHowarts;
-    String actor;
-    List<dynamic> actoresAlt;
-    bool vive;
-    String imagen;
     for (var i = 0; i < json.length; i++) {
       try {
         if (json[i]["name"] == nombre.nombre) {
@@ -168,10 +150,9 @@ class RepositorioObtenerPersonaje extends RepositorioPersonaje {
     }
     return Left(PersonajeNoEncontrado());
   }
-
-  List<dynamic> lecturaJson(String rutaJson) {
-    List<dynamic> json;
-    json = jsonDecode((File(rutaJson).readAsStringSync()));
-    return json;
-  }
+}
+List<dynamic> leeJson(String rutaJson) {
+  List<dynamic> json;
+  json = jsonDecode((File(rutaJson).readAsStringSync()));
+  return json;
 }

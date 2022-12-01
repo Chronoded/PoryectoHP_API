@@ -47,8 +47,8 @@ void main() {
     });
 
     test('con Hermione Gringa arroja personaje no encontrado', () async {
-      RepositorioPersonajesReales rp = RepositorioPersonajesReales();
-      var resultado = await rp
+      RepositorioPersonajesReales repo = RepositorioPersonajesReales();
+      var resultado = await repo
           .obtenerPersonaje(NombrePersonaje.contructor('Hermione Gringa'));
       resultado.match((l) {
         expect(l, isA<PersonajeNoEncontrado>());
