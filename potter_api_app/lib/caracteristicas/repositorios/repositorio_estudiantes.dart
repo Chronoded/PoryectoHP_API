@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:fpdart/fpdart.dart';
 import 'package:potter_api_app/caracteristicas/dominio/nombre_personaje.dart';
+import 'package:potter_api_app/caracteristicas/repositorios/repositorio_json.dart';
 import '../dominio/personajes.dart';
 import '../dominio/problema.dart';
 import 'package:http/http.dart' as http;
@@ -30,26 +31,24 @@ List<dynamic> json = [];
 List<Personaje> listaEstudiantes = [];
 
 abstract class RepoEstudiante {
+  late RepositorioPruebaJson constructor;
+  RepoEstudiante (this.constructor);
   Future<Either<Problema, Personaje>> obtenerEstudiante(NombrePersonaje nombre);
 }
 
 class RepositorioEstudiantes extends RepoEstudiante {
+  RepositorioEstudiantes(super.constructor);
   @override
   Future<Either<Problema, Personaje>> obtenerEstudiante(
       NombrePersonaje nombre) async {
     String base = 'https://hp-api.onrender.com/api/characters/students';
-    if (listaEstudiantes.isEmpty) {
-      Uri direccion = Uri.parse(base);
-      final respuesta = await http.get(direccion);
-      if (respuesta.statusCode != 200) {
-        return left(ErrordeJson());
-      }
-      json = jsonDecode(respuesta.body);
-      try {
-        listaEstudiantes = obtenerListaEstudiantes(json);
-      } catch (e) {
-        return Left(JsonInexistente());
-      }
+     if (listaEstudiantes.isEmpty) {
+      var resultado = await constructor.obtenerDatos('online', base);
+      resultado.match((l) {
+        return Left(l);
+      }, (r) {
+        listaEstudiantes = obtenerListaEstudiantes(r);
+      });
     }
     for (var i = 0; i < listaEstudiantes.length; i++) {
       if (listaEstudiantes[i].estudianteHowarts == false) {
@@ -64,28 +63,26 @@ class RepositorioEstudiantes extends RepoEstudiante {
 }
 
 class RepositorioEstudiantesPruebas extends RepoEstudiante {
+  RepositorioEstudiantesPruebas(super.constructor);
   @override
   Future<Either<Problema, Personaje>> obtenerEstudiante(
       NombrePersonaje nombre) async {
-    if (listaEstudiantes.isEmpty) {
-      try {
-        json = leeJson(jsonEstudiante);
-      } catch (e) {
-        return Left(JsonNoEncontrado());
-      }
+     if (listaEstudiantes.isEmpty) {
+      var resultado =
+          await constructor.obtenerDatos('offline', jsonEstudiante);
+      resultado.match((l) {
+        return Left(l);
+      }, (r) {
+        listaEstudiantes = obtenerListaEstudiantes(r);
+      });
     }
-    try {
-      listaEstudiantes = obtenerListaEstudiantes(json);
-      for (var i = 0; i < listaEstudiantes.length; i++) {
-        if (listaEstudiantes[i].estudianteHowarts == false) {
-          return Left(NoEsEstudiante());
-        }
-        if (listaEstudiantes[i].nombre == nombre.valor) {
-          return Right(listaEstudiantes[i]);
-        }
+    for (var i = 0; i < listaEstudiantes.length; i++) {
+      if (listaEstudiantes[i].estudianteHowarts == false) {
+        return Left(NoEsEstudiante());
       }
-    } catch (e) {
-      return Left(JsonInexistente());
+      if (listaEstudiantes[i].nombre == nombre.valor) {
+        return Right(listaEstudiantes[i]);
+      }
     }
     return Left(EstudianteNoEsta());
   }
