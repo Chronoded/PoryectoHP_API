@@ -7,6 +7,6 @@ void main() {
     'emite el estado "PrimeraPantalla" cuando se agrega el evento "Creado"',
     build: () => BlocVerificacion(),
     act: (bloc) => bloc.add(Creado()),
-    expect: () => [isA<PantallaInicial>()],
+    expect: () => [isA<MostrandoTabs>()],
   );
 }

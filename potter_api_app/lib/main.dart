@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:potter_api_app/caracteristicas/verificaciones/bloc.dart';
 import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_creandose.dart';
-import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_primerapantalla.dart';
+import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_menutabs.dart';
 
 void main() {
   runApp(const AplicacionInyectada());
@@ -40,8 +40,8 @@ class AplicacionInyectada extends StatelessWidget {
           if (estado is Creandose) {
             return const VistaEnCreacion();
           }
-          if (estado is PantallaInicial) {
-            return const VistaPrimeraPantalla();
+          if (estado is MostrandoTabs) {
+            return const Tabs();
           }
           return const Center(child: Text('ERROR'));
         }),
