@@ -156,3 +156,68 @@ List<dynamic> leeJson(String rutaJson) {
   json = jsonDecode((File(rutaJson).readAsStringSync()));
   return json;
 }
+
+Future<Either<Problema, List<Personaje>>> obtenerListaPersonajes() async {
+  Personaje p;
+  List<Personaje> listaPersonajes = [];
+  List<dynamic> json = [];
+  String base = 'https://hp-api.onrender.com/api/characters';
+  if (listaPersonajes.isEmpty) {
+    Uri direccion = Uri.parse(base);
+    final respuesta = await http.get(direccion);
+    if (respuesta.statusCode != 200) {
+      return left(ErrordeJson());
+    }
+    json = jsonDecode(respuesta.body);
+  }
+
+  for (var i = 0; i < json.length; i++) {
+    try {
+      nombrejson = json[i]['name'];
+      nombresAlt = json[i]['alternate_names'];
+      especie = json[i]['species'];
+      escuela = json[i]['house'];
+      fechaNac = json[i]['dateOfBirth'];
+      anioNac = json[i]['yearOfBirth'];
+      mago = json[i]['wizard'];
+      ancestro = json[i]['ancestry'];
+      colorOjos = json[i]['eyeColour'];
+      colorCabello = json[i]['hairColour'];
+      varita = json[i]['wand'];
+      patronus = json[i]['patronus'];
+      estudianteHowarts = json[i]['hogwartsStudent'];
+      varitaHowarts = json[i]['hogwartsStaff'];
+      actor = json[i]['actor'];
+      actoresAlt = json[i]['alternate_actors'];
+      vive = json[i]['alive'];
+      imagen = json[i]['image'];
+      p = Personaje.constructor(
+          nombre: nombrejson,
+          actor: actor,
+          actoresAlt: actoresAlt,
+          ancestro: ancestro,
+          anioNac: anioNac,
+          colorCabello: colorCabello,
+          colorOjos: colorOjos,
+          escuela: escuela,
+          especie: especie,
+          estudianteHowarts: estudianteHowarts,
+          fechaNac: fechaNac,
+          mago: mago,
+          nombresAlt: nombresAlt,
+          imagen: imagen,
+          patronus: patronus,
+          varita: varita,
+          varitaHowarts: varitaHowarts,
+          vive: vive);
+      listaPersonajes.add(p);
+    } catch (e) {
+      print('retorno left');
+      return Left(JsonInexistente());
+    }
+  }
+  for (var i = 0; i < listaPersonajes.length; i++) {
+    print(listaPersonajes[i].nombre);
+  }
+  return Right(listaPersonajes);
+}
