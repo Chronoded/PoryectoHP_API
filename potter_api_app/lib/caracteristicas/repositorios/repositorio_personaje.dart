@@ -9,7 +9,7 @@ abstract class RepositorioPersonaje {
   Either<Problema, Personaje> obtenerPersonaje(NombrePersonaje nombre);
 }
 
-class RepositorioPruebasPersonaje extends RepositorioPersonaje {
+class RepositorioObtenerPersonaje extends RepositorioPersonaje {
   @override
   Either<Problema, Personaje> obtenerPersonaje(NombrePersonaje nombre) {
     Personaje p;
