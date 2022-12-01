@@ -11,3 +11,7 @@ class JsonNoEncontrado extends Problema {}
 class JsonInexistente extends Problema {}
 
 class ErrordeJson extends Problema{}
+
+class EstudianteNoEsta extends Problema{}
+
+class NoEsEstudiante extends Problema{}
