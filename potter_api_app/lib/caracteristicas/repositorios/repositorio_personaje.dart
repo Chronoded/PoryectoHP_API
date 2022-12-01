@@ -32,64 +32,31 @@ class RepositorioPersonajesReales extends RepositorioPersonaje {
   @override
   Future<Either<Problema, Personaje>> obtenerPersonaje(
       NombrePersonaje nombre) async {
-    Personaje p;
+    List<Personaje> listaPersonajes = [];
+    List<dynamic> json = [];
     String base = 'https://hp-api.onrender.com/api/characters';
-    Uri direccion = Uri.parse(base);
-    final respuesta = await http.get(direccion);
-    if (respuesta.statusCode != 200) {
+    if (listaPersonajes.isEmpty) {
+      Uri direccion = Uri.parse(base);
+      final respuesta = await http.get(direccion);
+      if (respuesta.statusCode != 200) {
       return left(ErrordeJson());
-    }
-    List<dynamic> json = jsonDecode(respuesta.body);
-
-    for (var i = 0; i < json.length; i++) {
+      }
+      json = jsonDecode(respuesta.body);
       try {
-        if (json[i]["name"] == nombre.nombre) {
-          nombrejson = json[i]['name'];
-          nombresAlt = json[i]['alternate_names'];
-          especie = json[i]['species'];
-          escuela = json[i]['house'];
-          fechaNac = json[i]['dateOfBirth'];
-          anioNac = json[i]['yearOfBirth'];
-          mago = json[i]['wizard'];
-          ancestro = json[i]['ancestry'];
-          colorOjos = json[i]['eyeColour'];
-          colorCabello = json[i]['hairColour'];
-          varita = json[i]['wand'];
-          patronus = json[i]['patronus'];
-          estudianteHowarts = json[i]['hogwartsStudent'];
-          varitaHowarts = json[i]['hogwartsStaff'];
-          actor = json[i]['actor'];
-          actoresAlt = json[i]['alternate_actors'];
-          vive = json[i]['alive'];
-          imagen = json[i]['image'];
-          p = Personaje.constructor(
-              nombre: nombrejson,
-              actor: actor,
-              actoresAlt: actoresAlt,
-              ancestro: ancestro,
-              anioNac: anioNac,
-              colorCabello: colorCabello,
-              colorOjos: colorOjos,
-              escuela: escuela,
-              especie: especie,
-              estudianteHowarts: estudianteHowarts,
-              fechaNac: fechaNac,
-              mago: mago,
-              nombresAlt: nombresAlt,
-              imagen: imagen,
-              patronus: patronus,
-              varita: varita,
-              varitaHowarts: varitaHowarts,
-              vive: vive);
-          return Right(p);
-        }
+        listaPersonajes = obtenerListaPersonajes(json);
       } catch (e) {
-        return Left(JsonInexistente());
+         return Left(JsonInexistente());
+      }
+    }
+    for (var i = 0; i < listaPersonajes.length; i++) {
+      if (listaPersonajes[i].nombre == nombre.valor) {
+        return Right(listaPersonajes[i]);
       }
     }
     return Left(PersonajeNoEncontrado());
   }
 }
+
 class RepositorioObtenerPersonaje extends RepositorioPersonaje {
   @override
   Future<Either<Problema, Personaje>> obtenerPersonaje(
@@ -98,13 +65,13 @@ class RepositorioObtenerPersonaje extends RepositorioPersonaje {
     String jsonPersonaje = './lib/caracteristicas/data/datos_personaje.json';
     List<dynamic> json;
     try {
-      json = leeJson(jsonPersonaje);
+      json = lecturaJson(jsonPersonaje);
     } catch (e) {
       return Left(JsonNoEncontrado());
     }
     for (var i = 0; i < json.length; i++) {
       try {
-        if (json[i]["name"] == nombre.nombre) {
+        if (json[i]["name"] == nombre.valor) {
           nombrejson = json[i]['name'];
           nombresAlt = json[i]['alternate_names'];
           especie = json[i]['species'];
@@ -151,28 +118,16 @@ class RepositorioObtenerPersonaje extends RepositorioPersonaje {
     return Left(PersonajeNoEncontrado());
   }
 }
-List<dynamic> leeJson(String rutaJson) {
+List<dynamic> lecturaJson(String rutaJson) {
   List<dynamic> json;
   json = jsonDecode((File(rutaJson).readAsStringSync()));
   return json;
 }
 
-Future<Either<Problema, List<Personaje>>> obtenerListaPersonajes() async {
-  Personaje p;
+List<Personaje> obtenerListaPersonajes(List<dynamic> json)  {
   List<Personaje> listaPersonajes = [];
-  List<dynamic> json = [];
-  String base = 'https://hp-api.onrender.com/api/characters';
-  if (listaPersonajes.isEmpty) {
-    Uri direccion = Uri.parse(base);
-    final respuesta = await http.get(direccion);
-    if (respuesta.statusCode != 200) {
-      return left(ErrordeJson());
-    }
-    json = jsonDecode(respuesta.body);
-  }
-
+  Personaje p;
   for (var i = 0; i < json.length; i++) {
-    try {
       nombrejson = json[i]['name'];
       nombresAlt = json[i]['alternate_names'];
       especie = json[i]['species'];
@@ -211,13 +166,6 @@ Future<Either<Problema, List<Personaje>>> obtenerListaPersonajes() async {
           varitaHowarts: varitaHowarts,
           vive: vive);
       listaPersonajes.add(p);
-    } catch (e) {
-      print('retorno left');
-      return Left(JsonInexistente());
-    }
   }
-  for (var i = 0; i < listaPersonajes.length; i++) {
-    print(listaPersonajes[i].nombre);
-  }
-  return Right(listaPersonajes);
+  return listaPersonajes;
 }

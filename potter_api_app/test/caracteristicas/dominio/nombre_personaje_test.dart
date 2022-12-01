@@ -5,7 +5,7 @@ import 'package:potter_api_app/caracteristicas/dominio/problema.dart';
 void main() {
   test('si no esta vacio no arroja error', () {
     NombrePersonaje nom = NombrePersonaje.contructor('Oliver');
-    expect(nom.nombre, 'Oliver');
+    expect(nom.valor, 'Oliver');
   });
 
   test('nombre vacio o con espacios arroja error', () {
