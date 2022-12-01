@@ -19,3 +19,5 @@ class NoEsEstudiante extends Problema{}
 class HechizoErroneo extends Problema{}
 
 class ManeraErronea extends Problema{}
+
+class HechizoInexistente extends Problema{}
