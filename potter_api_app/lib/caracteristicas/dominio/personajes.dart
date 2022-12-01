@@ -3,11 +3,11 @@ import 'package:potter_api_app/caracteristicas/dominio/problema.dart';
 
 class Personaje {
   final String nombre;
-  final List<String>? nombresAlt;
+  final List<dynamic>? nombresAlt;
   final String? especie;
   final String? escuela;
   final String? fechaNac;
-  final String? anioNac;
+  final int? anioNac;
   final bool? mago;
   final String? ancestro;
   final String? colorOjos;
@@ -17,7 +17,7 @@ class Personaje {
   final bool? estudianteHowarts;
   final bool? varitaHowarts;
   final String? actor;
-  final List<String>? actoresAlt;
+  final List<dynamic>? actoresAlt;
   final bool? vive;
   final String? imagen;
   Personaje._(
@@ -42,11 +42,11 @@ class Personaje {
 
   factory Personaje.constructor(
       {required String nombre,
-      List<String>? nombresAlt,
+      List<dynamic>? nombresAlt,
       String? especie,
       String? escuela,
       String? fechaNac,
-      String? anioNac,
+      int? anioNac,
       bool? mago,
       String? ancestro,
       String? colorOjos,
@@ -56,7 +56,7 @@ class Personaje {
       bool? estudianteHowarts,
       bool? varitaHowarts,
       String? actor,
-      List<String>? actoresAlt,
+      List<dynamic>? actoresAlt,
       bool? vive,
       String? imagen}) {
     if (nombre.trim().isEmpty) {
