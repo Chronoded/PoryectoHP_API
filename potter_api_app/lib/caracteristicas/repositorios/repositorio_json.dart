@@ -21,6 +21,11 @@ class RepositorioPruebaJson extends RepositorioJson{
         return left(ErrordeJson());
       }
       json = jsonDecode(respuesta.body);
+       for (var i = 0; i < json.length; i++) {
+          if (!json[i].toString().contains('name:')) {
+            return Left(JsonInexistente());
+          } 
+        }
       } catch (e) {
         return Left(JsonNoEncontrado());
       }
@@ -29,6 +34,11 @@ class RepositorioPruebaJson extends RepositorioJson{
     if (modo == 'offline') {
       try {
         json = jsonDecode((File(ruta).readAsStringSync()));
+        for (var i = 0; i < json.length; i++) {
+          if (!json[i].toString().contains('name:')) {
+            return Left(JsonInexistente());
+          } 
+        }
       } catch (e) {
         return Left(JsonNoEncontrado());
       }
