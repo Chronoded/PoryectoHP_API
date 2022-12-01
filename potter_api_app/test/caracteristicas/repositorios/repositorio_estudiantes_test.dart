@@ -2,12 +2,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:potter_api_app/caracteristicas/dominio/nombre_personaje.dart';
 import 'package:potter_api_app/caracteristicas/dominio/problema.dart';
 import 'package:potter_api_app/caracteristicas/repositorios/repositorio_estudiantes.dart';
+import 'package:potter_api_app/caracteristicas/repositorios/repositorio_json.dart';
 
 void main() {
   group('RepositorioEstudiante pruebas', () {
     group('pruebas offline de repositorio estudiante:', () {
       test('con Neville Longbottom espero un estudiante', () async {
-        RepositorioEstudiantesPruebas repo = RepositorioEstudiantesPruebas();
+        RepositorioPruebaJson repoj = RepositorioPruebaJson();
+        RepositorioEstudiantesPruebas repo =
+            RepositorioEstudiantesPruebas(repoj);
         var resultado = await repo.obtenerEstudiante(
             NombrePersonaje.contructor('Neville Longbottom'));
         resultado.match((l) {
@@ -24,7 +27,9 @@ void main() {
       });
 
       test('con Neville Langbattam arroja EstudianteNoEncontrado', () async {
-        RepositorioEstudiantesPruebas repo = RepositorioEstudiantesPruebas();
+        RepositorioPruebaJson repoj = RepositorioPruebaJson();
+        RepositorioEstudiantesPruebas repo =
+            RepositorioEstudiantesPruebas(repoj);
         var resultado = await repo.obtenerEstudiante(
             NombrePersonaje.contructor('Neville Langbattam'));
         resultado.match((l) {
@@ -38,7 +43,8 @@ void main() {
 
   group('pruebas online de repo estudiante:', () {
     test('con Percy Weasley espero un estudiante', () async {
-      RepositorioEstudiantesPruebas repo = RepositorioEstudiantesPruebas();
+      RepositorioPruebaJson repoj = RepositorioPruebaJson();
+      RepositorioEstudiantesPruebas repo = RepositorioEstudiantesPruebas(repoj);
       var resultado = await repo
           .obtenerEstudiante(NombrePersonaje.contructor('Percy Weasley'));
       resultado.match((l) {
@@ -51,7 +57,8 @@ void main() {
     });
 
     test('con Percy Wasly espero estudiante no esta', () async {
-      RepositorioEstudiantesPruebas repo = RepositorioEstudiantesPruebas();
+      RepositorioPruebaJson repoj = RepositorioPruebaJson();
+      RepositorioEstudiantesPruebas repo = RepositorioEstudiantesPruebas(repoj);
       var resultado = await repo
           .obtenerEstudiante(NombrePersonaje.contructor('Miguel Corner'));
       resultado.match((l) {

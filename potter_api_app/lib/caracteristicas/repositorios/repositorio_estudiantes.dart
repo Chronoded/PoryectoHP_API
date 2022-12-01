@@ -1,11 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:fpdart/fpdart.dart';
 import 'package:potter_api_app/caracteristicas/dominio/nombre_personaje.dart';
 import 'package:potter_api_app/caracteristicas/repositorios/repositorio_json.dart';
 import '../dominio/personajes.dart';
 import '../dominio/problema.dart';
-import 'package:http/http.dart' as http;
+
 
 String nombrejson = '';
 List<dynamic>? nombresAlt;
@@ -42,7 +40,7 @@ class RepositorioEstudiantes extends RepoEstudiante {
   Future<Either<Problema, Personaje>> obtenerEstudiante(
       NombrePersonaje nombre) async {
     String base = 'https://hp-api.onrender.com/api/characters/students';
-     if (listaEstudiantes.isEmpty) {
+    if (listaEstudiantes.isEmpty) {
       var resultado = await constructor.obtenerDatos('online', base);
       resultado.match((l) {
         return Left(l);
@@ -67,7 +65,7 @@ class RepositorioEstudiantesPruebas extends RepoEstudiante {
   @override
   Future<Either<Problema, Personaje>> obtenerEstudiante(
       NombrePersonaje nombre) async {
-     if (listaEstudiantes.isEmpty) {
+    if (listaEstudiantes.isEmpty) {
       var resultado =
           await constructor.obtenerDatos('offline', jsonEstudiante);
       resultado.match((l) {
@@ -86,12 +84,6 @@ class RepositorioEstudiantesPruebas extends RepoEstudiante {
     }
     return Left(EstudianteNoEsta());
   }
-}
-
-List<dynamic> leeJson(String rutaJson) {
-  List<dynamic> json;
-  json = jsonDecode((File(rutaJson).readAsStringSync()));
-  return json;
 }
 
 List<Personaje> obtenerListaEstudiantes(List<dynamic> json) {
