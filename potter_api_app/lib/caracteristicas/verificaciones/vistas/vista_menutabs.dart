@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_listaestudiantes.dart';
 import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_listahechizos.dart';
 import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_listapersonajes.dart';
 import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_primerapantalla.dart';
@@ -31,7 +32,7 @@ class Tabs extends StatelessWidget {
                     child: TabBarView(
                   children: [
                     ListaPersonajes(),
-                    ListaPersonajes(),
+                    ListaEstudiantes(),
                     ListaHechizos(),
                   ],
                 ))
