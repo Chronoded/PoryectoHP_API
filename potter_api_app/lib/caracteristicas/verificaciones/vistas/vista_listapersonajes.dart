@@ -5,15 +5,15 @@ import 'package:potter_api_app/caracteristicas/dominio/personaje.dart';
 import 'package:potter_api_app/caracteristicas/repositorios/repositorio_estudiante.dart';
 import 'package:potter_api_app/caracteristicas/verificaciones/vistas/Detalles_personajes.dart';
 
-class Aplicacion extends StatefulWidget {
-  const Aplicacion({Key key}) : super(key: key);
+class ListaPersonajes extends StatefulWidget {
+  const ListaPersonajes({Key key}) : super(key: key);
 
 
   @override
-  State<Aplicacion> createState() => _AplicacionState();
+  State<ListaPersonajes> createState() => _AplicacionState();
 }
 
-class _AplicacionState extends State<Aplicacion> {
+class _AplicacionState extends State<ListaPersonajes> {
   PersonajesService service = PersonajesService();
   @override
   Widget build(BuildContext context) {
