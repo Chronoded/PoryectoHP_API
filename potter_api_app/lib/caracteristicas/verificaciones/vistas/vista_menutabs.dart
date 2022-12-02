@@ -14,7 +14,7 @@ class Tabs extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Listas"),
+          title: const Text("Harry Potter API"),
         ),
         body: Center(
           child: SafeArea(

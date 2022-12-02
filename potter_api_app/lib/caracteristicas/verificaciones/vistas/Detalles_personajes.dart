@@ -22,11 +22,6 @@ class _DetallesPersonajesState extends State<DetallesPersonajes> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              child: Image.network(widget.personajes.image),
-              height: 300,
-              margin: EdgeInsets.only(top: 30, bottom: 10),
-            ),
             Center(
               child: Container(
                 width: 600,

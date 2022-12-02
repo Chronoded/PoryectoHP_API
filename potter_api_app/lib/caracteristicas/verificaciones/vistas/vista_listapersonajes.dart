@@ -32,13 +32,6 @@ class _AplicacionState extends State<ListaPersonajes> {
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
                         child: ListTile(
                           title: Text(item.name),
-                          leading: Container(
-                            height: 60,
-                            width: 60,
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(item.image),
-                            ),
-                          ),
                           trailing: Text(item.house,
                            style: TextStyle(color: houseColor(item.house))),
                         ),
