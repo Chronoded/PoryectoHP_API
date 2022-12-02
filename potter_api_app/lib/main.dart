@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:potter_api_app/caracteristicas/verificaciones/bloc.dart';
@@ -9,7 +10,7 @@ void main() {
 }
 
 class AplicacionInyectada extends StatelessWidget {
-  const AplicacionInyectada({super.key});
+  const AplicacionInyectada({Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -28,7 +29,7 @@ class AplicacionInyectada extends StatelessWidget {
      
   }
    class Aplicacion extends StatelessWidget {
-  const Aplicacion({super.key});
+  const Aplicacion({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
