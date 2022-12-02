@@ -1,4 +1,7 @@
+
 import 'package:flutter/material.dart';
+import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_listahechizos.dart';
+import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_listapersonajes.dart';
 import 'package:potter_api_app/caracteristicas/verificaciones/vistas/vista_primerapantalla.dart';
 
 class Tabs extends StatelessWidget {
@@ -27,9 +30,9 @@ class Tabs extends StatelessWidget {
                 Expanded(
                     child: TabBarView(
                   children: [
-                    VistaPrimeraPantalla(),
-                    VistaPrimeraPantalla(),
-                    VistaPrimeraPantalla(),
+                    ListaPersonajes(),
+                    ListaPersonajes(),
+                    ListaHechizos(),
                   ],
                 ))
               ],
